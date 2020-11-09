@@ -21,7 +21,7 @@ chooseEl.addEventListener("click", function () {
   console.log("finding file...");
   const dialogPaths = dialog.showOpenDialogSync({
     properties: ["openFile"],
-    filters: [{ name: "Binary Hex File", extensions: [".hex"] }],
+    //filters: [{ name: "Binary Hex File", extensions: [".hex"] }],
   });
   pathToFlash = dialogPaths[0];
   if (pathToFlash) {
