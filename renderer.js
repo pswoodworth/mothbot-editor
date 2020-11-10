@@ -91,7 +91,13 @@ disConnectSerialButton.addEventListener("click", disconnectSerial);
 
 blinkValueButton.addEventListener("click", function () {
   const value = document.querySelector("#blink-value").value;
+  /*if(value==1) {
+  port.write("ON\n"); 
+  } else {
+  port.write("OFF\n");
+  }*/
   port.write(value);
+  port.write("\n");
 });
 
 function setupPortSelector() {

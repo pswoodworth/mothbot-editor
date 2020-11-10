@@ -27,14 +27,23 @@
       <button id="choose-file">Choose a file...</button>
       <button id="flash" disabled>Flash it!</button>
     </p>
-    <h2>Fuck it up</h2>
+    <h2>Send commands via serial port</h2>
+    <p>
+      Available commands:
+      <ul>
+        <li><b>ON</b> -- LED on.</li>
+        <li><b>OFF</b> -- LED off.</li>
+        <li><b>SET_WIFI [SSID] [PASSWORD]</b> -- stores wifi ssid and password in EEPROM.</li>
+        <li><b>GET_WIFI</b> -- retrieves wifi ssid and password stored in EEPROM.</li>
+      </ul>
+    </p>
     <p>
       <button id="connect-serial">connect to serial</button
       ><button id="disconnect-serial" disabled>disconnect</button>
     </p>
     <p>
-      Set blink interval to: <input type="number" id="blink-value" />
-      <button id="send-blink-value" disabled>set it!!</button>
+      Command: <input type="text" id="blink-value" />
+      <button id="send-blink-value" disabled>SEND!</button>
     </p>
     <h2>M'lord's console:</h2>
     <code
