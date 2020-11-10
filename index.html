@@ -3,23 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
+    <!-- TODO: BRING THIS BACK!! -->
+    <!-- <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
     <meta
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
-    />
+    /> -->
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Welcome to the Mothbot Utility!</h1>
+    <h1>noʎ ʞuɐɥʇ sǝʎ ʎʇᴉlᴉʇn ʇoqɥʇoɯ oʇ ǝɯoɔlǝʍ</h1>
+    <h2>Set 'er up</h2>
     <p>
-      Pick a compiled <code>.hex</code> files to flash.
-      <button id="choose-file">Choose a file...</button>
+      Serial Port:
+      <select type="text" id="serial-port"></select>
     </p>
-    <p><button id="flash" disabled>Flash it!</button></p>
+    <h2>Flash this sucker</h2>
+    <p>
+      Pick a compiled <code>.hex</code> file to flash.
+      <button id="choose-file">Choose a file...</button>
+      <button id="flash" disabled>Flash it!</button>
+    </p>
+    <h2>Fuck it up</h2>
+    <p>
+      <button id="connect-serial">connect to serial</button
+      ><button id="disconnect-serial" disabled>disconnect</button>
+    </p>
+    <p>
+      Set blink interval to: <input type="number" id="blink-value" />
+      <button id="send-blink-value" disabled>set it!!</button>
+    </p>
+    <h2>M'lord's console:</h2>
+    <code
+      style="
+        height: 100px;
+        overflow: scroll;
+        border-radius: 5px;
+        background-color: lightgray;
+        white-space: pre;
+        display: block;
+        padding: 10px;
+      "
+      id="serial-console"
+    >
+    </code>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>

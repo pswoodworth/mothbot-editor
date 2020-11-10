@@ -7,10 +7,10 @@
 
 const { dialog } = require("electron").remote;
 const Avrgirl = require("avrgirl-arduino");
+const SerialPort = require("serialport");
+const Readline = require("@serialport/parser-readline");
 
-const avrgirl = new Avrgirl({
-  board: "uno",
-});
+let port;
 
 let pathToFlash;
 
@@ -32,6 +32,11 @@ chooseEl.addEventListener("click", function () {
 
 flashEl.addEventListener("click", function () {
   console.log(`flashing "${pathToFlash}"...`);
+  const serialPort = serialPortInput.value;
+  const avrgirl = new Avrgirl({
+    board: "uno",
+    port: serialPort,
+  });
   avrgirl.flash(pathToFlash, function (error) {
     if (error) {
       console.error(error);
@@ -44,3 +49,61 @@ flashEl.addEventListener("click", function () {
     }
   });
 });
+
+const connectSerialButton = document.querySelector("#connect-serial");
+const disConnectSerialButton = document.querySelector("#disconnect-serial");
+
+connectSerialButton.addEventListener("click", attachPort);
+
+const blinkValueButton = document.querySelector("#send-blink-value");
+const serialConsole = document.querySelector("#serial-console");
+const serialPortInput = document.querySelector("#serial-port");
+
+function attachPort() {
+  const serialPort = serialPortInput.value;
+  const baud = 9600;
+  port = new SerialPort(serialPort, {
+    baudRate: baud,
+  });
+  blinkValueButton.disabled = false;
+  connectSerialButton.disabled = true;
+  disConnectSerialButton.disabled = false;
+  flashEl.disabled = true;
+  const parser = new Readline();
+  port.pipe(parser);
+  parser.on("data", function (data) {
+    const br = document.createElement("br");
+    serialConsole.append(br);
+    serialConsole.append(data);
+  });
+}
+
+function disconnectSerial() {
+  port.close(function () {
+    blinkValueButton.disabled = true;
+    connectSerialButton.disabled = false;
+    disConnectSerialButton.disabled = true;
+    flashEl.disabled = false;
+  });
+}
+
+disConnectSerialButton.addEventListener("click", disconnectSerial);
+
+blinkValueButton.addEventListener("click", function () {
+  const value = document.querySelector("#blink-value").value;
+  port.write(value);
+});
+
+function setupPortSelector() {
+  SerialPort.list().then((ports) => {
+    ports.forEach((port) => {
+      serialPortInput;
+      const option = document.createElement("option");
+      option.value = port.path;
+      option.append(port.path);
+      serialPortInput.append(option);
+    });
+  });
+}
+
+setupPortSelector();
